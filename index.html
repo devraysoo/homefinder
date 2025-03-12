@@ -32,6 +32,11 @@
             background-color: #EBF4F6;
             padding-top: 70px;
             overflow-x: hidden;
+          
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         h1, h2, h3, .font-bold {
@@ -203,7 +208,7 @@
         }
     </style>
 </head>
-<body class="bg-secondary">
+<body class="bg-secondary" oncontextmenu="return false">
    
     <nav class="fixed top-0 left-0 right-0 z-10 bg-white shadow-md">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -459,6 +464,41 @@
                     
                    
                     console.log('Filter selected:', this.textContent.trim());
+                });
+            });
+            
+            
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                alert("Right-click is disabled to protect content.");
+                return false;
+            });
+            
+           
+            document.addEventListener('keydown', function(e) {
+              
+                if (
+                    (e.ctrlKey && e.key === 's') || 
+                    (e.ctrlKey && e.key === 'u') || 
+                    (e.ctrlKey && e.shiftKey && e.key === 'i') ||
+                    e.key === 'F12'
+                ) {
+                    e.preventDefault();
+                    alert("This keyboard shortcut is disabled to protect content.");
+                    return false;
+                }
+            });
+            
+        
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Disable dragging images
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('dragstart', function(e) {
+                    e.preventDefault();
                 });
             });
         });

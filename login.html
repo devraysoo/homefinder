@@ -40,7 +40,7 @@
             color: #4c1d95;
         }
 
-        /* Mobile Menu Styles */
+      
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -96,12 +96,12 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Prevent body scroll when menu is open */
+      
         body.menu-open {
             overflow: hidden;
         }
 
-        /* Improved Nav Styling */
+      
         .nav-link {
             position: relative;
             padding: 0.5rem 0;
@@ -122,7 +122,7 @@
             width: 100%;
         }
 
-        /* Form Styling */
+       
         .form-input {
             width: 100%;
             padding: 0.75rem 1rem;
@@ -160,7 +160,7 @@
             transform: translateY(-1px);
         }
 
-        /* Social Button Hover Effects */
+        
         .social-btn {
             transition: all 0.3s ease;
         }
@@ -168,40 +168,40 @@
         .social-btn:hover {
             transform: translateY(-2px);
         }
+
         
-        /* Card Styling */
         .card-shadow {
             box-shadow: 0 10px 25px -5px rgba(76, 29, 149, 0.1), 0 10px 10px -5px rgba(76, 29, 149, 0.04);
         }
     </style>
 </head>
 <body class="bg-secondary">
-    <!-- Navigation Bar - Fixed at top -->
+    
     <nav class="fixed top-0 left-0 right-0 z-10 bg-white shadow-md">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="text-primary font-bold text-2xl">HomeFinder</a>
             
-            <!-- Desktop Menu -->
+            
             <div class="hidden md:flex space-x-8">
                 <a href="index.html" class="text-gray-700 hover:text-primary-light nav-link font-medium">Home</a>
                 <a href="index.html#properties" class="text-gray-700 hover:text-primary-light nav-link font-medium">Properties</a>
                 <a href="index.html#contact" class="text-gray-700 hover:text-primary-light nav-link font-medium">Contact</a>
             </div>
             
-            <!-- Desktop Auth Buttons -->
+         
             <div class="hidden md:flex space-x-3">
                 <a href="login.html" class="px-5 py-2 border-2 border-primary rounded-md text-primary hover:bg-primary hover:text-white transition duration-300 font-medium">Login</a>
                 <a href="signup.html" class="px-5 py-2 bg-primary-light text-white rounded-md hover:bg-primary transition duration-300 font-medium">Sign Up</a>
             </div>
 
-            <!-- Mobile Menu Toggle -->
+         
             <button class="md:hidden text-primary text-2xl p-2 rounded-md hover:bg-gray-100" id="mobile-menu-toggle">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
+ 
     <div class="mobile-menu md:hidden" id="mobile-menu">
         <button class="mobile-menu-close" id="mobile-menu-close">
             <i class="fas fa-times"></i>
@@ -217,7 +217,7 @@
         </div>
     </div>
 
-    <!-- Login Form -->
+  
     <section class="py-12 px-4 sm:px-6">
         <div class="max-w-md mx-auto bg-white rounded-xl card-shadow overflow-hidden">
             <div class="bg-gradient-to-r from-primary to-primary-light py-6 px-8">
@@ -289,7 +289,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+   
     <footer class="bg-white py-6 mt-8 shadow-inner">
         <div class="max-w-5xl mx-auto px-6">
             <div class="border-t border-gray-200 pt-6 text-center text-sm text-gray-600">
@@ -299,7 +299,7 @@
     </footer>
 
     <script>
-        // Mobile Menu Functionality
+      
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
             const mobileMenuClose = document.getElementById('mobile-menu-close');
@@ -314,7 +314,7 @@
             mobileMenuToggle.addEventListener('click', toggleMenu);
             mobileMenuClose.addEventListener('click', toggleMenu);
 
-            // Close menu when clicking on a link
+          
             const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
             mobileMenuLinks.forEach(link => {
                 link.addEventListener('click', toggleMenu);

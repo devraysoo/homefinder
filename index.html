@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeFinder - Find Your Perfect Home in Laoag City</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'geist': ['Geist Sans', 'sans-serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#4c1d95',
+                        'primary-light': '#7c3aed',
+                        'secondary': '#EBF4F6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            background-color: #EBF4F6;
+            padding-top: 70px;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, .font-bold {
+            font-family: 'Geist Sans', 'Poppins', sans-serif;
+            font-weight: 700;
+            color: #4c1d95;
+        }
+        
+        .property-card {
+            transition: transform 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .property-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .property-card-footer {
+            margin-top: auto;
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%);
+            transition: right 0.3s ease-in-out;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-link {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0.75rem 0;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+            letter-spacing: 1px;
+            padding: 0.5rem 2rem;
+            border-radius: 0.5rem;
+        }
+
+        .mobile-menu-link:hover {
+            transform: translateX(5px);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Prevent body scroll when menu is open */
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        /* Improved Nav Styling */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #7c3aed;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Search Bar Styling */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 1rem 1.25rem;
+            border: none;
+            font-size: 1rem;
+            color: #4b5563;
+            background-color: white;
+        }
+
+        .search-input:focus {
+            outline: none;
+        }
+
+        .search-button {
+            background-color: #7c3aed;
+            color: white;
+            font-weight: 600;
+            padding: 0 1.5rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-button:hover {
+            background-color: #4c1d95;
+        }
+
+        @media (max-width: 640px) {
+            .search-container {
+                flex-direction: column;
+                box-shadow: none;
+            }
+            
+            .search-input {
+                width: 100%;
+                border-radius: 0.5rem;
+                margin-bottom: 0.5rem;
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            }
+            
+            .search-button {
+                width: 100%;
+                padding: 0.75rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            }
+        }
+    </style>
+</head>
+<body class="bg-secondary">
+    <!-- Navigation Bar - Fixed at top -->
+    <nav class="fixed top-0 left-0 right-0 z-10 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="text-primary font-bold text-2xl">HomeFinder</a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-gray-700 hover:text-primary-light nav-link font-medium">Home</a>
+                <a href="#properties" class="text-gray-700 hover:text-primary-light nav-link font-medium">Properties</a>
+                <a href="#contact" class="text-gray-700 hover:text-primary-light nav-link font-medium">Contact</a>
+            </div>
+            
+            <!-- Desktop Auth Buttons -->
+            <div class="hidden md:flex space-x-3">
+                <a href="login.html" class="px-5 py-2 border-2 border-primary rounded-md text-primary hover:bg-primary hover:text-white transition duration-300 font-medium">Login</a>
+                <a href="signup.html" class="px-5 py-2 bg-primary-light text-white rounded-md hover:bg-primary transition duration-300 font-medium">Sign Up</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden text-primary text-2xl p-2 rounded-md hover:bg-gray-100" id="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu md:hidden" id="mobile-menu">
+        <button class="mobile-menu-close" id="mobile-menu-close">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="flex flex-col items-center">
+            <a href="index.html" class="mobile-menu-link">HOME</a>
+            <a href="#properties" class="mobile-menu-link">PROPERTIES</a>
+            <a href="#contact" class="mobile-menu-link">CONTACT</a>
+            <div class="mt-10 flex flex-col items-center space-y-5">
+                <a href="login.html" class="mobile-menu-link bg-white bg-opacity-10 px-8 py-2 rounded-md text-lg">LOGIN</a>
+                <a href="signup.html" class="mobile-menu-link bg-white bg-opacity-20 px-8 py-2 rounded-md text-lg">SIGN UP</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-10 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-primary">Find Your Perfect Home in Laoag City</h1>
+        <p class="text-gray-600 mb-8 text-lg">Browse apartments, studios, rooms for rent in Ilocos Norte's capital</p>
+        
+        <!-- Improved Search Bar -->
+        <div class="mb-8 px-4">
+            <div class="search-container">
+                <input type="text" placeholder="Search in Laoag City, Ilocos" class="search-input">
+                <button class="search-button">Search</button>
+            </div>
+        </div>
+        
+        <!-- Property Type Filters -->
+        <div class="flex flex-wrap justify-center gap-3 mb-8">
+            <button class="px-5 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700 font-medium shadow-sm hover:shadow transition duration-200">Apartments</button>
+            <button class="px-5 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700 font-medium shadow-sm hover:shadow transition duration-200">Studios</button>
+            <button class="px-5 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700 font-medium shadow-sm hover:shadow transition duration-200">Rooms for Rent</button>
+            <button class="px-5 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700 font-medium shadow-sm hover:shadow transition duration-200">Vacation Rentals</button>
+            <button class="px-5 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700 font-medium shadow-sm hover:shadow transition duration-200">Houses</button>
+        </div>
+    </section>
+
+    <!-- Featured Properties Section -->
+    <section class="py-10" id="properties">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-2xl font-bold mb-6 text-primary">Featured Properties in Laoag City</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Property Card 1 -->
+                <div class="property-card bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=350&q=80" alt="Modern Apartment in Laoag" class="w-full h-48 object-cover">
+                        <span class="absolute top-3 left-3 bg-primary-light text-white text-xs font-bold px-2 py-1 rounded">Apartment</span>
+                    </div>
+                    <div class="p-4 property-card-content">
+                        <h3 class="text-lg font-bold mb-2 text-primary">Modern 2-Bedroom near Sinking Bell Tower</h3>
+                        <p class="text-primary-light font-bold mb-3 text-lg">₱15,000/month</p>
+                        <div class="flex flex-wrap gap-2 text-sm text-gray-600 mb-3">
+                            <span class="flex items-center"><i class="fas fa-bed mr-1"></i> 2 Beds</span>
+                            <span class="flex items-center"><i class="fas fa-bath mr-1"></i> 2 Baths</span>
+                            <span class="flex items-center"><i class="fas fa-vector-square mr-1"></i> 80 sqm</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-1 flex items-start">
+                            <i class="fas fa-map-marker-alt mr-2 mt-1 text-primary-light"></i>
+                            <span>Gen. Segundo Ave, Laoag City</span>
+                        </p>
+                        <p class="text-sm text-gray-600 mb-4 flex items-start">
+                            <i class="fas fa-phone-alt mr-2 mt-1 text-primary-light"></i>
+                            <span>0917 123 4567</span>
+                        </p>
+                        <div class="property-card-footer">
+                            <button class="w-full bg-primary-light text-white py-2 rounded-md text-sm font-medium hover:bg-primary transition duration-300">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property Card 2 -->
+                <div class="property-card bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=350&q=80" alt="Studio Apartment in Laoag" class="w-full h-48 object-cover">
+                        <span class="absolute top-3 left-3 bg-primary-light text-white text-xs font-bold px-2 py-1 rounded">Studio</span>
+                    </div>
+                    <div class="p-4 property-card-content">
+                        <h3 class="text-lg font-bold mb-2 text-primary">Cozy Studio near Laoag City Hall</h3>
+                        <p class="text-primary-light font-bold mb-3 text-lg">₱8,500/month</p>
+                        <div class="flex flex-wrap gap-2 text-sm text-gray-600 mb-3">
+                            <span class="flex items-center"><i class="fas fa-bed mr-1"></i> 1 Bed</span>
+                            <span class="flex items-center"><i class="fas fa-bath mr-1"></i> 1 Bath</span>
+                            <span class="flex items-center"><i class="fas fa-vector-square mr-1"></i> 35 sqm</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-1 flex items-start">
+                            <i class="fas fa-map-marker-alt mr-2 mt-1 text-primary-light"></i>
+                            <span>Rizal St, Laoag City Center</span>
+                        </p>
+                        <p class="text-sm text-gray-600 mb-4 flex items-start">
+                            <i class="fas fa-phone-alt mr-2 mt-1 text-primary-light"></i>
+                            <span>0918 987 6543</span>
+                        </p>
+                        <div class="property-card-footer">
+                            <button class="w-full bg-primary-light text-white py-2 rounded-md text-sm font-medium hover:bg-primary transition duration-300">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property Card 3 -->
+                <div class="property-card bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=350&q=80" alt="Room for Rent in Laoag" class="w-full h-48 object-cover">
+                        <span class="absolute top-3 left-3 bg-primary-light text-white text-xs font-bold px-2 py-1 rounded">Room</span>
+                    </div>
+                    <div class="p-4 property-card-content">
+                        <h3 class="text-lg font-bold mb-2 text-primary">Private Room near MMSU</h3>
+                        <p class="text-primary-light font-bold mb-3 text-lg">₱5,000/month</p>
+                        <div class="flex flex-wrap gap-2 text-sm text-gray-600 mb-3">
+                            <span class="flex items-center"><i class="fas fa-bed mr-1"></i> 1 Room</span>
+                            <span class="flex items-center"><i class="fas fa-bath mr-1"></i> Shared Bath</span>
+                            <span class="flex items-center"><i class="fas fa-vector-square mr-1"></i> 20 sqm</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-1 flex items-start">
+                            <i class="fas fa-map-marker-alt mr-2 mt-1 text-primary-light"></i>
+                            <span>Brgy. 16, San Nicolas, Laoag</span>
+                        </p>
+                        <p class="text-sm text-gray-600 mb-4 flex items-start">
+                            <i class="fas fa-phone-alt mr-2 mt-1 text-primary-light"></i>
+                            <span>0919 234 5678</span>
+                        </p>
+                        <div class="property-card-footer">
+                            <button class="w-full bg-primary-light text-white py-2 rounded-md text-sm font-medium hover:bg-primary transition duration-300">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-8 mt-10 shadow-inner" id="contact">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-primary font-bold text-xl mb-3">HomeFinder</h3>
+                    <p class="text-sm text-gray-600 max-w-xs">Find your perfect home in Laoag City, Ilocos Norte. The premier property listing service in the region.</p>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-primary-light hover:text-primary text-lg"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-primary-light hover:text-primary text-lg"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-primary-light hover:text-primary text-lg"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                    <div>
+                        <h4 class="text-primary font-semibold mb-3">Quick Links</h4>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li><a href="#properties" class="hover:text-primary-light">Properties</a></li>
+                            <li><a href="#contact" class="hover:text-primary-light">Contact</a></li>
+                            <li><a href="#" class="hover:text-primary-light">Privacy Policy</a></li>
+                            <li><a href="#" class="hover:text-primary-light">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-primary font-semibold mb-3">Areas</h4>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li><a href="#" class="hover:text-primary-light">Laoag City</a></li>
+                            <li><a href="#" class="hover:text-primary-light">San Nicolas</a></li>
+                            <li><a href="#" class="hover:text-primary-light">Batac</a></li>
+                            <li><a href="#" class="hover:text-primary-light">Paoay</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-primary font-semibold mb-3">Contact</h4>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-envelope mt-1 mr-2 text-primary-light"></i>
+                                <span>info@homefinder.ph</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-phone-alt mt-1 mr-2 text-primary-light"></i>
+                                <span>+63 917 123 4567</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1 mr-2 text-primary-light"></i>
+                                <span>Rizal St, Laoag City, Ilocos Norte</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 mt-8 pt-6 text-center text-sm text-gray-600">
+                &copy; 2025 HomeFinder. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const body = document.body;
+
+            function toggleMenu() {
+                mobileMenu.classList.toggle('active');
+                body.classList.toggle('menu-open');
+            }
+
+            mobileMenuToggle.addEventListener('click', toggleMenu);
+            mobileMenuClose.addEventListener('click', toggleMenu);
+
+            // Close menu when clicking on a link
+            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', toggleMenu);
+            });
+        });
+
+        // Filter buttons functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.flex.flex-wrap.justify-center button');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('bg-primary-light', 'text-white');
+                        btn.classList.add('bg-white', 'text-gray-700');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.remove('bg-white', 'text-gray-700');
+                    this.classList.add('bg-primary-light', 'text-white');
+                    
+                    // Here you would typically filter the properties based on the selection
+                    console.log('Filter selected:', this.textContent.trim());
+                });
+            });
+        });
+    </script>
+</body>
+</html>
